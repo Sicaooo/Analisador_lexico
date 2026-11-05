@@ -112,7 +112,7 @@ int main(void) {
 			}
 			++char_atual;
 
-
+			//colocar um comedor de espaço em branco aqui
 
 			no_atual = &(*no_atual)->prox;
 

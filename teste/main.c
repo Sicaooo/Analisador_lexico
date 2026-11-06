@@ -46,7 +46,7 @@ bool push(no** no_atual, char* elemento, int tam_elemento, NomeTokens tipo) {
 
 bool in(const char* agulha, const char* palheiro, int tam_palheiro, int tam_elem_palheiro) {
 	for (int i = 0; i < tam_palheiro; ++i) {
-		if (strncmp(agulha, palheiro + i * tam_elem_palheiro, tam_elem_palheiro) == 0) return true;
+		if (strncmp(agulha, palheiro + i * tam_elem_palheiro, tam_elem_palheiro) == 0) return true; //MELHORAR A PARTE DA VERIFICAÇÃO. ESTÁ INSERGURO
 	}
 	return false;
 }

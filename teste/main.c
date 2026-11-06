@@ -110,9 +110,7 @@ int main(void) {
 				liberar_nos((*inicio).prox);
 				return 1;
 			}
-			++char_atual;
-
-			//colocar um comedor de espaço em branco aqui
+			do { ++char_atual; } while (*char_atual == ' ');
 
 			no_atual = &(*no_atual)->prox;
 
@@ -130,7 +128,7 @@ int main(void) {
 				liberar_nos(inicio->prox);
 				return 1;
 			}
-
+			
 			char_atual += i;
 			
 			no_atual = &(*no_atual)->prox;

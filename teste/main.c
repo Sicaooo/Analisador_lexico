@@ -160,7 +160,7 @@ int main(void) {
 		}
 		elem_buffer[i] = '\0';
 		
-		if (!push(no_atual, elem_buffer, i, (in(elem_buffer, PALAVRAS_CHAVE, QNT_PALAVRAS_CHAVE, 12)) ? PALAVRA_CHAVE : IDENTIFICADOR)) {
+		if (!push(no_atual, elem_buffer, i, (in(elem_buffer, *PALAVRAS_CHAVE, QNT_PALAVRAS_CHAVE, 12)) ? PALAVRA_CHAVE : IDENTIFICADOR)) {
 			printf("Nao foi possivel adicionar a pilha\n");
 			return 1;
 		}

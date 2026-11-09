@@ -44,10 +44,9 @@ bool push(no** no_atual, char* elemento, int tam_elemento, NomeTokens tipo) {
 	return true;
 }
 
-bool in(const char* agulha, const char* palheiro, int tam_palheiro, int tam_elem_palheiro) {
-	for (int i = 0; i < tam_palheiro; ++i) {
-		if (strncmp(agulha, palheiro + i * tam_elem_palheiro, tam_elem_palheiro) == 0) return true; //MELHORAR A PARTE DA VERIFICAÇÃO. ESTÁ INSERGURO
-	}
+bool in(const char* agulha, const char* palheiro, int tam_palheiro, int tam_elem_palheiro) {	for (int i = 0; i < tam_palheiro; ++i) {
+		if (strncmp(agulha, palheiro + i * tam_elem_palheiro, tam_elem_palheiro) == 0) return true;
+ 	}
 	return false;
 }
 
@@ -107,7 +106,7 @@ int main(void) {
 		if (in(char_atual, SIMBOLOS, QNT_SIMBOLOS, 1)) {
 			if (!push(no_atual, char_atual, 1, SIMBOLO)) {
 				printf("Nao foi possivel adicionar a pilha\n");
-				liberar_nos((*inicio).prox);
+				liberar_nos(inicio->prox);
 				return 1;
 			}
 			do { ++char_atual; } while (*char_atual == ' ');
@@ -138,7 +137,7 @@ int main(void) {
 		if (*char_atual == '"') {
 			int i;
 			for (i = 0; *char_atual != '"'; ++i) {
-				elem_buffer[i] = *char_atual;
+				elem_buffer[i] = *char_atual++;
 			}
 			elem_buffer[i] = '\0';
 
@@ -146,8 +145,10 @@ int main(void) {
 				printf("Nao foi possivel adicionar a pilha\n");
 				return 1;
 			}
-			 
-			char_atual += i;
+
+			while (*char_atual == ' ') {
+				++char_atual;
+			}
 
 			no_atual = &(*no_atual)->prox;
 
@@ -155,8 +156,7 @@ int main(void) {
 		}
 		int i;
 		for (i = 0; *char_atual != ' ' && !in(char_atual, SIMBOLOS, QNT_SIMBOLOS, 1); ++i) {
-			elem_buffer[i] = *char_atual;
-			++char_atual;
+			elem_buffer[i] = *char_atual++;
 		}
 		elem_buffer[i] = '\0';
 		
@@ -165,7 +165,9 @@ int main(void) {
 			return 1;
 		}
 
-		++char_atual;
+		while (*char_atual == ' ') {
+			++char_atual;
+		}
 
 		no_atual = &(*no_atual)->prox;
 	}
@@ -193,44 +195,3 @@ int main(void) {
 
 	return 0;
 }
-//NomeTokens token_atual;
-//bool verificar_simbolo = true;
-//bool flag_token = false;
-//char* inicio = buffer;
-//char elemento_atual[20];
-//
-//for (char* atual = buffer; atual; ++atual) {
-//	*elemento_atual = *atual;
-//	elemento_atual[1] = '\0';
-//	
-//	if (verificar_simbolo && in(elemento_atual, SIMBOLOS, QNT_SIMBOLOS, 1)) {
-//		token_atual = SIMBOLO;
-//		flag_token = true;
-//		inicio = atual + 1;
-//	}
-//	else if (!verificar_simbolo && *atual == ' ') {
-//		int tam_elemento = atual - inicio;
-//		memcpy(elemento_atual, inicio, tam_elemento);
-//		elemento_atual[tam_elemento] = '\0';
-//		
-//		token_atual = tokenizador(elemento_atual, PALAVRAS_CHAVE, QNT_PALAVRAS_CHAVE);
-//		verificar_simbolo = true;
-
-//		flag_token = true;
-//		
-//		inicio = atual + 1;
-//	}
-//	else verificar_simbolo = false;
-//	
-//	if (flag_token) {
-//		switch (token_atual) {
-//			case PALAVRA_CHAVE: printf("<keyword> %s </keyword>\n", elemento_atual); break;
-//			case SIMBOLO: printf("<symbol> %s </symbol>\n", elemento_atual); break;
-//			case NUMERO: printf("<intConst> %s </intConst>\n", elemento_atual); break;
-//			case STRING: printf("<stringConst> %s </stringConst>\n", elemento_atual); break;
-//			case IDENTIFICADOR: printf("<identifier> %s </identifier>\n", elemento_atual); break;
-//		}
-
-//		flag_token = false;
-//	}
-//}

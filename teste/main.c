@@ -46,7 +46,7 @@ void push_fechamento(char simbolo, struct no_fechamentos** pilha_fechamento) {
 	*pilha_fechamento = novo_no;
 }
 
-bool pop(char simbolo, struct no_fechamentos** pilha_fechamento) {
+bool pop_fechamento(char simbolo, struct no_fechamentos** pilha_fechamento) {
 	if ((*pilha_fechamento)->simbolo + 1 != simbolo && (*pilha_fechamento)->simbolo + 2 != simbolo && (*pilha_fechamento)->simbolo != simbolo) return false;
 
 	struct no_fechamentos* temp = *pilha_fechamento;
@@ -73,7 +73,7 @@ bool validar_fechamentos(const char* buffer_arquivo) {
 
 		if (flag_aspas) {
 			if (*cur_char == '"') {
-				pop('"', &pilha_fechamentos);
+				pop_fechamento('"', &pilha_fechamentos);
 				flag_aspas = false;
 			}
 			continue;
@@ -91,7 +91,7 @@ bool validar_fechamentos(const char* buffer_arquivo) {
 		case ')':
 		case ']':
 		case '}':
-			if (!pop(*cur_char, &pilha_fechamentos)) {
+			if (!pop_fechamento(*cur_char, &pilha_fechamentos)) {
 				printf("Problema no fechamento '%c' da linha %d com a abertura '%c' da linha %d\n", *cur_char, linha_atual, pilha_fechamentos->simbolo, linha_ultima_abertura);
 				return false;
 			}
@@ -107,7 +107,7 @@ bool validar_fechamentos(const char* buffer_arquivo) {
 }
 
 bool validar_linha(const char* buffer_arquivo) {
-	int pos_quebra_linha = strcspn(buffer_arquivo, "\n");
+	int pos_quebra_linha = (int)strcspn(buffer_arquivo, "\n");
 
 	int contador_linhas = 1;
 
@@ -117,7 +117,7 @@ bool validar_linha(const char* buffer_arquivo) {
 			return false;
 		}
 
-		pos_quebra_linha += strcspn(buffer_arquivo + pos_quebra_linha + 1, "\n") + 1;
+		pos_quebra_linha += (int)strcspn(buffer_arquivo + pos_quebra_linha + 1, "\n") + 1;
 		++contador_linhas;
 	}
 	return true;
